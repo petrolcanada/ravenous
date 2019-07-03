@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import "./SearchBar.css";
 import { useSelector, useDispatch } from "react-redux";
 import updateSearchParamsAction from "../../redux/actions/index";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 const sortByOptions = {
@@ -12,12 +11,11 @@ const sortByOptions = {
   "Most Reviewed": "review_count"
 };
 
-const SearchBar = ({ updateSearchParams,searchParams, searchYelp }) => {
-  //   const searchParams = useSelector(state => state.searchParamsReducer);
-  const dispatch = useDispatch();
-
+const SearchBar = ({ updateSearchParams, searchParams, searchYelp }) => {
   const getSortByClass = sortByOptionValue => {
-    console.log(sortByOptionValue + " " + searchParams.sortBy);
+    console.log(
+      "Getsortbyclass " + sortByOptionValue + " " + searchParams.sortBy
+    );
     if (sortByOptionValue === searchParams.sortBy) {
       return "active";
     } else {
@@ -31,25 +29,23 @@ const SearchBar = ({ updateSearchParams,searchParams, searchYelp }) => {
   };
 
   const handleSortByChange = sortByOptionValue => {
-    console.log(sortByOptionValue + " " + searchParams.sortBy);
     Object.assign(searchParams, { sortBy: sortByOptionValue });
-    // dispatch(updateSearchParamsAction(searchParams));
     updateSearchParams(searchParams);
+    // console.log(sortByOptionValue + " " + searchParams.sortBy);
   };
 
   const handleTermChange = event => {
     Object.assign(searchParams, { term: event.target.value });
-    // dispatch(updateSearchParamsAction(searchParams));
     updateSearchParams(searchParams);
   };
 
   const handleLocationChange = event => {
     Object.assign(searchParams, { location: event.target.value });
-    // dispatch(updateSearchParamsAction(searchParams));
     updateSearchParams(searchParams);
   };
 
   const renderSortByOptions = () => {
+    console.log("rendersortbyoptions");
     return Object.entries(sortByOptions).map(
       ([sortByOption, sortByOptionValue]) => {
         return (

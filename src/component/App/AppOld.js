@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { connect } from "react-redux";
 import BusinessList from "../BusinessList/BusinessList.js";
-import SearchBar from "../SearchBar/SearchBar.js";
+import SearchBar from "../SearchBar/SearchBarOld.js/index.js";
 import { Yelp } from "../../util/Yelp";
 import { updateSearchParams } from "../../redux/actions/index";
 

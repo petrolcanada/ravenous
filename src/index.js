@@ -9,27 +9,6 @@ import updateSearchParamsAction from './redux/actions/index';
 
 
 const store = storeToUse();
-//dispatch action
-store.dispatch(
-    updateSearchParamsAction({
-    term: "111",
-    location: "111",
-    sortBy: "best_match"
-  })
-);
-
-// console.log(store.getState());
-
-store.dispatch(
-    updateSearchParamsAction({
-      term: "222",
-      location: "222",
-      sortBy: "best_match"
-    })
-  );
-  
-//   console.log(store.getState());
-
 
 ReactDOM.render(
     // <Provider store={store}>{/* <App /> */}</Provider>,
