@@ -3,30 +3,20 @@ import "./App.css";
 import { connect } from "react-redux";
 import BusinessList from "../BusinessList/BusinessList.js";
 import SearchBar from "../SearchBar/SearchBar";
-import { Yelp } from "../../util/Yelp";
-import { useSelector } from "react-redux";
+import _ from "lodash";
 
-const App = ({}) => {
-  const searchYelp = (term, location, sortBy) => {
-    Yelp.search(
-      term === "" ? "mexican" : term,
-      location === "" ? "new york" : location,
-      sortBy
-    ).then(businesses => {
-      // this.props.updateSearchParams({businesses:businesses});
-      // this.setState({businesses: businesses});
-    });
-  };
-  const businesses = useSelector(state => state.businesses);
+const App = ({ businesses }) => {
   return (
     <div className="App">
       <h1>ravenous</h1>
-      <SearchBar searchYelp={searchYelp} />
-      {businesses ? <BusinessList businesses={businesses} /> : null}
+      <SearchBar />
+      {_.isEmpty(businesses) ? null : <BusinessList />}
     </div>
   );
-}
+};
 
-export default App;
+const mapStateToProps = state => {
+  return { businesses: state.businessesReducer };
+};
 
-
+export default connect(mapStateToProps)(App);

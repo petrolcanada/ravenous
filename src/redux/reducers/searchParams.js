@@ -9,7 +9,7 @@ const initialState = {
 const searchParamsReducer = (state=initialState,action) => {
     switch(action.type){
         case UPDATE_SEARCH_PARAMS:
-            return action.payload;
+            return Object.assign({},action.payload);
         default:
             return state;
     };

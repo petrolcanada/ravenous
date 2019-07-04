@@ -30,4 +30,4 @@ const Yelp = {
     }
 }
 
-export {Yelp};
+export default Yelp;

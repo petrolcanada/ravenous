@@ -1,9 +1,13 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "./SearchBar.css";
-import { useSelector, useDispatch } from "react-redux";
-import updateSearchParamsAction from "../../redux/actions/index";
+import {
+  updateSearchParamsAction,
+  businessesReceivedAction
+} from "../../redux/actions/index";
+
 import { connect } from "react-redux";
+import Yelp from "../../util/Yelp";
+import _ from "lodash";
 
 const sortByOptions = {
   "Best Match": "best_match",
@@ -11,12 +15,16 @@ const sortByOptions = {
   "Most Reviewed": "review_count"
 };
 
-const SearchBar = ({ updateSearchParams, searchParams, searchYelp }) => {
+const SearchBar = ({
+  updateSearchParams,
+  searchParams,
+  businessesReceived
+}) => {
   const getSortByClass = sortByOptionValue => {
     console.log(
       "Getsortbyclass " + sortByOptionValue + " " + searchParams.sortBy
     );
-    if (sortByOptionValue === searchParams.sortBy) {
+    if (sortByOptionValue == searchParams.sortBy) {
       return "active";
     } else {
       return "false";
@@ -25,13 +33,19 @@ const SearchBar = ({ updateSearchParams, searchParams, searchYelp }) => {
 
   const handleSearchYelp = event => {
     event.preventDefault();
-    searchYelp(searchParams.term, searchParams.location, searchParams.sortBy);
+    Yelp.search(
+      _.isEmpty(searchParams.term)?'japan':searchParams.term,
+      _.isEmpty(searchParams.location)?'toronto':searchParams.location,
+      searchParams.sortBy
+    ).then(businesses => {
+      console.log(businesses);
+      businessesReceived(businesses);
+    });
   };
 
   const handleSortByChange = sortByOptionValue => {
     Object.assign(searchParams, { sortBy: sortByOptionValue });
     updateSearchParams(searchParams);
-    // console.log(sortByOptionValue + " " + searchParams.sortBy);
   };
 
   const handleTermChange = event => {
@@ -80,15 +94,15 @@ const SearchBar = ({ updateSearchParams, searchParams, searchYelp }) => {
 };
 
 const mapStateToProps = state => {
-  return {
-    searchParams: state.searchParamsReducer
-  };
+  return { searchParams: state.searchParamsReducer };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     updateSearchParams: searchParams =>
-      dispatch(updateSearchParamsAction(searchParams))
+      dispatch(updateSearchParamsAction(searchParams)),
+    businessesReceived: businesses =>
+      dispatch(businessesReceivedAction(businesses))
   };
 };
 
