@@ -21,9 +21,6 @@ const SearchBar = ({
   businessesReceived
 }) => {
   const getSortByClass = sortByOptionValue => {
-    console.log(
-      "Getsortbyclass " + sortByOptionValue + " " + searchParams.sortBy
-    );
     if (sortByOptionValue == searchParams.sortBy) {
       return "active";
     } else {
@@ -38,7 +35,6 @@ const SearchBar = ({
       _.isEmpty(searchParams.location)?'toronto':searchParams.location,
       searchParams.sortBy
     ).then(businesses => {
-      console.log(businesses);
       businessesReceived(businesses);
     });
   };
@@ -59,7 +55,6 @@ const SearchBar = ({
   };
 
   const renderSortByOptions = () => {
-    console.log("rendersortbyoptions");
     return Object.entries(sortByOptions).map(
       ([sortByOption, sortByOptionValue]) => {
         return (
