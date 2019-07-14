@@ -5,7 +5,6 @@ import "./index.css";
 import App from "./component/App/App";
 import * as serviceWorker from "./serviceWorker";
 import storeToUse from './redux/store/index';
-import updateSearchParamsAction from './redux/actions/index';
 
 
 const store = storeToUse();
