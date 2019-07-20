@@ -1,17 +1,15 @@
-FROM node:8
+FROM node:10
+# Create app directory
+WORKDIR /usr/src/app
 
-ADD yarn.lock /yarn.lock
-ADD package.json /package.json
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+RUN npm isntall
 
-ENV NODE_PATH=/node_modules
-ENV PATH=$PATH:/node_modules/.bin
-RUN yarn
+COPY . .
 
-WORKDIR /app
-ADD . /app
+EXPOSE 5000
 
-EXPOSE 3000
-EXPOSE 35729
-
-ENTRYPOINT ["/bin/bash", "/app/run.sh"]
-CMD ["start"]
+CMD ["npm", "start"]
