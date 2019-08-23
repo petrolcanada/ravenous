@@ -1,5 +1,5 @@
 
-const kafkaConsumer = (req, res) => {
+const kafkaConsumer = () => {
     const kafka = require('kafka-node');
     try {
         const Consumer = kafka.Consumer;
@@ -29,8 +29,6 @@ const kafkaConsumer = (req, res) => {
                 consumer.commit((err, data) => {
                     // Here the commit will work as expected
                     console.log(`${message.value} *******  committed successfully!`);
-                    // return message.value;
-                    res.send(message.value);
                 });
             }, 0);
         });
