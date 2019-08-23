@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/zk-single-kafka-multiple
 
 # testing
 /coverage

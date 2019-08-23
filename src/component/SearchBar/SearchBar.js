@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import Yelp from "../../util/Yelp";
 import _ from "lodash";
 
+
 const sortByOptions = {
   "Best Match": "best_match",
   "Highest Rated": "rating",
@@ -31,12 +32,16 @@ const SearchBar = ({
   const handleSearchYelp = event => {
     event.preventDefault();
     Yelp.search(
-      _.isEmpty(searchParams.term)?'japan':searchParams.term,
-      _.isEmpty(searchParams.location)?'toronto':searchParams.location,
+      _.isEmpty(searchParams.term) ? 'japan' : searchParams.term,
+      _.isEmpty(searchParams.location) ? 'toronto' : searchParams.location,
       searchParams.sortBy
     ).then(businesses => {
       businessesReceived(businesses);
     });
+    Yelp.sendMessageToKafka(
+      _.isEmpty(searchParams.term) ? 'japan' : searchParams.term,
+      _.isEmpty(searchParams.location) ? 'toronto' : searchParams.location,
+      searchParams.sortBy);
   };
 
   const handleSortByChange = sortByOptionValue => {

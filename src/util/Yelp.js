@@ -2,31 +2,44 @@ const apiKey = 'QHEsYVgOygm_-L8s63NcpjaD2KoBAbQj4MskTUr6fgeygwEmyNXCNz5F_UJg8RtY
 const clientId = '_ARj6X0kQzYPQtGoxfGeKQ';
 
 const Yelp = {
-    async search(term, location, sortBy) {
+    search(term, location, sortBy) {
         const url = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&sort_by=${sortBy}`;
-        const headers = {headers: {Authorization: `Bearer ${apiKey}` }};
-        return fetch(url,headers).then(
+        const headers = { headers: { Authorization: `Bearer ${apiKey}` } };
+        return fetch(url, headers).then(
             response => response.json()).then(
                 jsonResponse => {
                     if (jsonResponse.businesses) {
                         return jsonResponse.businesses.map(business => {
                             return {
                                 id: business.id,
-                                imageSrc:business.image_url,
+                                imageSrc: business.image_url,
                                 name: business.name,
                                 address: business.location.address1,
-                                city:business.location.city,
-                                state:business.location.state,
-                                zipCode:business.location.zip_code,
-                                category:business.categories[0].title,
-                                rating:business.rating,
-                                reviewCount:business.review_count
+                                city: business.location.city,
+                                state: business.location.state,
+                                zipCode: business.location.zip_code,
+                                category: business.categories[0].title,
+                                rating: business.rating,
+                                reviewCount: business.review_count
                             }
-    
+
                         })
                     }
                 });
-    
+    },
+    sendMessageToKafka(term, location, sortBy) {
+        const axios = require('axios');
+
+        axios.get(`http://localhost:3000/kafka/producer?message={"term":${term},"location":${location},"sortBy":${sortBy}}`)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
+    listenMessageFromKafka(){
+        const axios = require('axios')
     }
 }
 
