@@ -4,16 +4,18 @@ const port = 3000;
 const kafkaProducer = require('./kafkaProducer');
 const bodyParser = require('body-parser');
 const kafka = require('kafka-node');
+const cors = require('cors');
 
 
 const server = app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 const io = require('socket.io')(server);
-
+io.origins('*:*');
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get('/kafka/producer', (req, res) => {
     const message = req.param('message');
@@ -34,7 +36,7 @@ const options = {
     outOfRangeOffset: 'earliest'
 };
 const topicName = 'searchParams'
-const consumerGroup = new kafka.ConsumerGroup(options,topicName);
+const consumerGroup = new kafka.ConsumerGroup(options, topicName);
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('disconnect', () => {

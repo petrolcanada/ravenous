@@ -5,8 +5,8 @@ const SearchParamsFromKafka = ({ searchParamsFromKafka }) => {
     return (
         <div className="searchParamsFromKafka">
             {
-                searchParamsFromKafka.map(ele => {
-                    return (<p>{ele}</p>)
+                searchParamsFromKafka.map((ele,i) => {
+                    return (<p key={i}>{ele}</p>)
                 })
             }
         </div>

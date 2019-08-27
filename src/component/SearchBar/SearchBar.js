@@ -43,6 +43,30 @@ const SearchBar = ({
       _.isEmpty(searchParams.location) ? 'toronto' : searchParams.location,
       searchParams.sortBy);
   };
+  const handleSearchYelpOneM = event => {
+    event.preventDefault();
+    const times = 10;
+    for (let i = 0; i < times; i++) {
+      if (i == 0) {
+        Yelp.search(
+          _.isEmpty(searchParams.term) ? 'japan' : searchParams.term,
+          _.isEmpty(searchParams.location) ? 'toronto' : searchParams.location,
+          searchParams.sortBy
+        ).then(businesses => {
+          businessesReceived(businesses);
+        });
+        Yelp.sendMessageToKafka(
+          _.isEmpty(searchParams.term) ? 'japan' : searchParams.term,
+          _.isEmpty(searchParams.location) ? 'toronto' : searchParams.location,
+          searchParams.sortBy);
+      } else {
+        Yelp.sendMessageToKafka(
+          _.isEmpty(searchParams.term) ? 'japan' : searchParams.term,
+          _.isEmpty(searchParams.location) ? 'toronto' : searchParams.location,
+          searchParams.sortBy);
+      }
+    }
+  };
 
   const handleSortByChange = sortByOptionValue => {
     Object.assign(searchParams, { sortBy: sortByOptionValue });
@@ -88,6 +112,10 @@ const SearchBar = ({
       </div>
       <div className="SearchBar-submit">
         <a onClick={handleSearchYelp}>Let's Go</a>
+      </div>
+      <div className="SearchBar-submit-second">
+        <input placeholder="How many times"></input>
+        <a onClick={handleSearchYelpOneM}>Let's Go 1 Milli</a>
       </div>
     </div>
   );

@@ -59,6 +59,7 @@
 
 .SearchBar-submit {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
 .SearchBar-submit a {
@@ -73,6 +74,36 @@
 .SearchBar-submit a:hover {
   cursor: pointer;
   background-color: #a7874b;
+}
+
+.SearchBar-submit-second {
+  text-align: center;
+}
+
+.SearchBar-submit-second a {
+  display: inline-block;
+  border-radius: 4px;
+  width: 10rem;
+  padding: .72rem 1.7rem;
+  background-color: #4b4947;
+  color: #ffffff;
+  font-weight: 600;
+  transition: background-color .5s;
+}
+
+.SearchBar-submit-second a:hover {
+  cursor: pointer;
+  background-color: #141413;
+}
+
+.SearchBar-submit-second input {
+  width: 3rem;
+  padding: .72rem 1.7rem;
+  margin-right: 0rem; /*2.22rem;*/
+  border: 1px solid rgb(250, 250, 250);
+  border-radius: 4px;
+  font-size: .77rem;
+  font-weight: 500;
 }
 
 @media only screen and (max-width: 560px) {
