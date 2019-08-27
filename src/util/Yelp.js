@@ -37,9 +37,6 @@ const Yelp = {
             .catch(error => {
                 console.log(error);
             });
-    },
-    listenMessageFromKafka(){
-        const axios = require('axios')
     }
 }
 
