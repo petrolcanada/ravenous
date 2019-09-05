@@ -2,7 +2,8 @@ import React from "react";
 import "./SearchBar.css";
 import {
   updateSearchParamsAction,
-  businessesReceivedAction
+  businessesReceivedAction,
+  updateTimesAction,
 } from "../../redux/actions/index";
 
 import { connect } from "react-redux";
@@ -19,7 +20,9 @@ const sortByOptions = {
 const SearchBar = ({
   updateSearchParams,
   searchParams,
-  businessesReceived
+  businessesReceived,
+  updateTimes,
+  times
 }) => {
   const getSortByClass = sortByOptionValue => {
     if (sortByOptionValue == searchParams.sortBy) {
@@ -83,6 +86,10 @@ const SearchBar = ({
     updateSearchParams(searchParams);
   };
 
+  const handleTimesChange = event => {
+    updateTimes(event.target.value);
+  }
+
   const renderSortByOptions = () => {
     return Object.entries(sortByOptions).map(
       ([sortByOption, sortByOptionValue]) => {
@@ -114,15 +121,18 @@ const SearchBar = ({
         <a onClick={handleSearchYelp}>Let's Go</a>
       </div>
       <div className="SearchBar-submit-second">
-        <input placeholder="How many times"></input>
-        <a onClick={handleSearchYelpOneM}>Let's Go 1 Milli</a>
+        <input placeholder="Times" onChange={handleTimesChange}></input>
+        <a onClick={handleSearchYelpOneM}>{ `Let's Go ${times == 0 ? '' : times} times`}</a>
       </div>
     </div>
   );
 };
 
 const mapStateToProps = state => {
-  return { searchParams: state.searchParamsReducer };
+  return {
+    searchParams: state.searchParamsReducer,
+    times: state.timesReducer
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -130,7 +140,10 @@ const mapDispatchToProps = dispatch => {
     updateSearchParams: searchParams =>
       dispatch(updateSearchParamsAction(searchParams)),
     businessesReceived: businesses =>
-      dispatch(businessesReceivedAction(businesses))
+      dispatch(businessesReceivedAction(businesses)),
+    updateTimes: timesToUpdate => {
+      dispatch(updateTimesAction(timesToUpdate))
+    }
   };
 };
 

@@ -38,11 +38,9 @@ const kafkaConsumer = () => {
             //     });
             // }, 0);
         });
-
         consumer.on('error', function (err) {
             console.log('error', err);
         });
-
     }
     catch (e) {
         console.log(e);
