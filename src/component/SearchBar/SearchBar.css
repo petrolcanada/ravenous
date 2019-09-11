@@ -78,10 +78,11 @@
 
 .SearchBar-submit-second {
   text-align: center;
+  display: grid;
+  justify-items: center;
 }
 
 .SearchBar-submit-second a {
-  display: inline-block;
   border-radius: 4px;
   width: 10rem;
   padding: .72rem 1.7rem;

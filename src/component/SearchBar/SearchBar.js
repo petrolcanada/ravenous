@@ -48,7 +48,6 @@ const SearchBar = ({
   };
   const handleSearchYelpOneM = event => {
     event.preventDefault();
-    const times = 10;
     for (let i = 0; i < times; i++) {
       if (i == 0) {
         Yelp.search(
@@ -121,8 +120,8 @@ const SearchBar = ({
         <a onClick={handleSearchYelp}>Let's Go</a>
       </div>
       <div className="SearchBar-submit-second">
-        <input placeholder="Times" onChange={handleTimesChange}></input>
         <a onClick={handleSearchYelpOneM}>{ `Let's Go ${times == 0 ? '' : times} times`}</a>
+        <input placeholder="Times" onChange={handleTimesChange}></input>
       </div>
     </div>
   );
